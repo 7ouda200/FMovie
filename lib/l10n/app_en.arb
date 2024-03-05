@@ -1,0 +1,14 @@
+{
+"todolist":"To Do List",
+ "setting":"Settings",
+ "addtask":"Add new task",
+ "done":"Done",
+ "edittask":"Edit task",
+ "add":"Add",
+ "save":"Save Changes",
+ "darkmode":"Dark Mode",
+ "lang":"Language",
+ "light":"light",
+  "dark":"dark"
+
+ }
