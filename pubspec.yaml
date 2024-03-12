@@ -53,6 +53,9 @@ dev_dependencies:
   provider: ^6.1.1
   flutter_localizations:
     sdk: flutter
+  flutter_slidable: ^3.0.1
+  fluttertoast: ^8.2.4
+
 
 
 

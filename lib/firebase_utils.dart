@@ -22,7 +22,7 @@ class FirebaseUtils {
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  static void deleteTaskFromFirestore(String taskid) {}
+
 
   static void editTaskToFirestore(String id, bool isDone) {
     FirebaseFirestore.instance
@@ -37,4 +37,10 @@ class FirebaseUtils {
     task.id = id;
     return doc.set(task);
   }
+  static Future<void> deleteTaskToFirestore(String id) {
+    final taskscollection = getTaskCollection();
+    return taskscollection.doc(id).delete();
+
+  }
+
 }

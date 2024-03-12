@@ -8,6 +8,7 @@ import 'package:todo/tabs/settings/setting.dart';
 import 'package:todo/tasks_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -87,11 +88,26 @@ class _TasksState extends State<Tasks> {
        )).timeout(
       const Duration(milliseconds: 500),
       onTimeout: (){
-        print('success');
+        Fluttertoast.showToast(
+            msg: "Task added successfully",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.SNACKBAR,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
       }
     ).catchError((_){
-
-      print('Error,try again');
+      Fluttertoast.showToast(
+          msg: "Something went wrong!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
     });
    Provider.of<TaskProvider>(context,listen:false).getTasks();
    Navigator.of(context).pop();
