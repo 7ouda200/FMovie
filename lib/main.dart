@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:todo/app_theme.dart';
-import 'package:todo/tabs/settings/setting.dart';
-import 'package:todo/tasks_provider.dart';
-import 'home_screen.dart';
+import 'package:movies_app/shared/app_theme.dart';
+import 'package:movies_app/view/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'models/watch_provider.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,16 +15,13 @@ void main()async{
   FirebaseFirestore.instance.disableNetwork;
   FirebaseFirestore.instance.settings=const Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
   runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => settingsProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) =>TaskProvider()..getTasks()),
-        ],
-        child: const MyApp(),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) =>WatchProvider()..getWatches()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -37,20 +31,51 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    settingsProvider settingsprovider = Provider.of<settingsProvider>(context);
-
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
+      // routes: {
+      //   HomeScreen.routeName:(context) => HomeScreen(),
+      //   Search.routeName:(context) => Search(),
+      //
+      // },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode:Provider.of<settingsProvider>(context).themeMode,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales:AppLocalizations.supportedLocales,
-      locale: Locale(settingsprovider.language),
-      home:home_screen(),
+      themeMode: ThemeMode.light,
+      title: 'Movies App',
+
+      home: splash_screen(),
     );
   }
 }
 
 
+class splash_screen extends StatefulWidget {
+  const splash_screen({super.key});
+
+  @override
+  State<splash_screen> createState() => _splash_screenState();
+}
+
+class _splash_screenState extends State<splash_screen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer(Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) =>
+                    NavigationBarScreen()
+            )
+        )
+    );
+
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image(image: AssetImage('images/group26.png')),
+    );
+  }
+}
